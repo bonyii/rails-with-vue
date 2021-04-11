@@ -8,7 +8,7 @@
 export default {
   data: function () {
     return {
-      message: "Hello Vue!"
+      message: "Hello to my first Vue and Rails application!"
     }
   }
 }
@@ -18,5 +18,6 @@ export default {
 p {
   font-size: 2em;
   text-align: center;
+  color: red;
 }
 </style>
