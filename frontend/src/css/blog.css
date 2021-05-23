@@ -1,0 +1,12 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+/* @layer base {
+   @font-face {
+   font-family: Montserrat;
+   font-weight: 400;
+   src: url('../../assets/fonts/Montserrat-Regular.ttf') format('truetype');
+   }
+   } */
