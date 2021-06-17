@@ -1,5 +1,44 @@
 // Karma configuration
-// Generated on Sun Jun 13 2021 21:52:40 GMT+0200 (Central European Summer Time)
+// Generated on Sun Jun 13 2021 14:10:07 GMT+0200 (Central European Summer Time)
+const os = require('os');
+const path = require('path');
+const webpack = require('webpack');
+const { VueLoaderPlugin } = require('vue-loader');
+
+const webpackConfig = {
+  plugins: [
+    new VueLoaderPlugin
+  ],
+  mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.vue?$/,
+        loader: 'vue-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css?$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }
+    ]
+  },
+  resolve: {
+    alias: {
+      "@": "src"
+    }
+  }
+}
 
 module.exports = function(config) {
   config.set({
@@ -10,11 +49,21 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'webpack'],
+
+
+    plugins: [
+      'karma-webpack',
+      'karma-sourcemap-loader',
+      'karma-jasmine',
+      'karma-firefox-launcher',
+      'karma-jasmine-html-reporter'
+    ],
 
 
     // list of files / patterns to load in the browser
     files: [
+      { pattern: './src/**/*.spec.js', watched: false }
     ],
 
 
@@ -26,13 +75,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
+      './src/**/*.spec.js': ['webpack', 'sourcemap']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'kjhtml'],
 
 
     // web server port
@@ -63,6 +113,9 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser instances should be started simultaneously
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    webpack: webpackConfig,
+    webpackMiddleware: {}
   })
 }
